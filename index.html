@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Seif, 19, Python and browser automation. Learning German to do an Ausbildung in Germany.">
+<title>Seif Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column on a faint grid-paper ground. The hero pairs the name with a small "profile.py" card; everything below stays quiet. */
+:root {
+  --bg: #e9eef3;
+  --surface: #f6f9fb;
+  --ink: #14202b;
+  --muted: #55657a;
+  --line: #c9d3dd;
+  --accent: #2748e0;
+  --accent-ink: #ffffff;
+  --grid: rgba(20, 32, 43, 0.06);
+  --good: #17784a;
+  --soon: #8a5a00;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1620;
+    --surface: #152030;
+    --ink: #e6edf5;
+    --muted: #93a3b8;
+    --line: #26354a;
+    --accent: #86a0ff;
+    --accent-ink: #0e1620;
+    --grid: rgba(230, 237, 245, 0.05);
+    --good: #5fd49b;
+    --soon: #e6b450;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1620;
+  --surface: #152030;
+  --ink: #e6edf5;
+  --muted: #93a3b8;
+  --line: #26354a;
+  --accent: #86a0ff;
+  --accent-ink: #0e1620;
+  --grid: rgba(230, 237, 245, 0.05);
+  --good: #5fd49b;
+  --soon: #e6b450;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 40px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; letter-spacing: -0.02em; }
+.hero h1 span { color: var(--accent); }
+.hero .lede { margin-top: 20px; font-size: 1.15rem; max-width: 34ch; color: var(--muted); }
+.hero .lede strong { color: var(--ink); font-weight: 600; }
+.actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-block; padding: 11px 20px; border-radius: 4px; font-weight: 600; text-decoration: none;
+  border: 1.5px solid var(--ink); color: var(--ink); background: transparent;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover { transform: translateY(-1px); }
+
+.code {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; min-width: 0;
+  box-shadow: 6px 6px 0 var(--line);
+}
+.code-bar { padding: 10px 14px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; }
+.code pre {
+  margin: 0; padding: 16px 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.75;
+}
+.k { color: var(--accent); }
+.s { color: var(--good); }
+.c { color: var(--muted); }
+
+/* Sections */
+section { display: flex; flex-direction: column; gap: 24px; }
+.head { display: flex; flex-direction: column; gap: 8px; }
+.head h2 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); font-weight: 700; }
+.about p { max-width: 62ch; }
+.about p + p { margin-top: 14px; }
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; min-width: 0; }
+.skill h3 { font-size: 1.05rem; margin-bottom: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--font-mono); font-size: 12.5px; padding: 3px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); }
+
+.projects { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
+.project { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.status { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 5px; }
+.status.built { color: var(--good); }
+.status.next { color: var(--soon); }
+.project h3 { font-size: 1.3rem; margin-bottom: 8px; }
+.project p { max-width: 60ch; color: var(--muted); }
+.project .chips { margin-top: 14px; }
+
+.langs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.lang { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.lang b { display: block; font-family: var(--font-display); font-size: 1.15rem; }
+.lang span { color: var(--muted); font-size: 0.95rem; }
+.bar { margin-top: 8px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 28px; }
+.contact dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 24px; }
+.contact dt { color: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+.note { font-size: 0.9rem; color: var(--muted); }
+footer { font-size: 0.85rem; color: var(--muted); font-family: var(--font-mono); }
+
+@media (max-width: 680px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .project { grid-template-columns: minmax(0, 1fr); }
+  .status { padding-top: 0; }
+  main { gap: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+</style>
+</head>
+<body><main>
+  <header class="hero">
+    <div>
+      <p class="label">Portfolio · Egypt</p>
+      <h1 style="margin-top:14px">Hi, I'm <span>Seif.</span></h1>
+      <p class="lede">I'm 19, <strong>I write Python that does the boring browser work for me</strong>, and I'm learning German to train and work in Germany.</p>
+      <div class="actions">
+        <a class="btn primary" href="#projects">See my projects</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="code" aria-label="Profile summary written as Python code">
+      <div class="code-bar"><span class="label">profile.py</span><span class="label">python 3</span></div>
+<pre><span class="k">seif</span> = {
+  <span class="s">"age"</span>: 19,
+  <span class="s">"from"</span>: <span class="s">"Egypt"</span>,
+  <span class="s">"codes_in"</span>: [<span class="s">"Python"</span>],
+  <span class="s">"learning"</span>: [<span class="s">"German"</span>, <span class="s">"Git"</span>],
+  <span class="s">"goal"</span>: <span class="s">"Ausbildung in Germany"</span>,
+  <span class="s">"status"</span>: <span class="s">"building"</span>,
+}</pre>
+    </div>
+  </header>
+
+  <section class="about" id="about">
+    <div class="head"><p class="label">About</p><h2>Learning by building</h2></div>
+    <div>
+      <p>I started programming by automating tasks I was tired of doing by hand. My first real project is a Python script that drives a browser with Playwright: it opens pages, waits for them to load, clicks through steps and fills in forms.</p>
+      <p>I'm a third-semester student at an AI faculty, and I spent two months teaching basic programming to kids at an academy, which taught me to explain things simply. I'm now moving from single scripts to full projects with a README, version control and a working demo. I'm also learning German, aiming for B1, with the plan of doing an Ausbildung in Germany.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="head"><p class="label">Skills</p><h2>What I work with</h2></div>
+    <div class="skills">
+      <div class="skill"><h3>Using now</h3><div class="chips"><span class="chip">Python</span><span class="chip">Playwright</span><span class="chip">Browser automation</span></div></div>
+      <div class="skill"><h3>Building up</h3><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Git &amp; GitHub</span></div></div>
+      <div class="skill"><h3>Next</h3><div class="chips"><span class="chip">Flask</span><span class="chip">SQL</span><span class="chip">REST APIs</span></div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="head"><p class="label">Projects</p><h2>Things I've built and what's next</h2></div>
+    <div class="projects">
+      <article class="project">
+        <div class="status built">Built</div>
+        <div>
+          <h3>Browser automation scripts</h3>
+          <p>Python scripts that use Playwright to move through a website on their own: loading pages, waiting for elements, clicking and filling forms. I'm cleaning up the code and adding a README so others can run it.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Playwright</span></div>
+        </div>
+      </article>
+      <article class="project">
+        <div class="status built">Live</div>
+        <div>
+          <h3>This portfolio</h3>
+          <p>A single page in plain HTML and CSS that collects everything I build in one place. Each new project gets added here with a link to its code.</p>
+          <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span></div>
+        </div>
+      </article>
+      <article class="project">
+        <div class="status next">Planned</div>
+        <div>
+          <h3>German flashcards with spaced repetition</h3>
+          <p>A small web app that shows German words again just before I would forget them. It supports my own learning and gives me a project with a database, a backend and real daily use.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Flask</span><span class="chip">SQLite</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="languages">
+    <div class="head"><p class="label">Languages</p><h2>Spoken, not just coded</h2></div>
+    <div class="langs">
+      <div class="lang"><b>Arabic</b><span>Native</span><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="lang"><b>English</b><span>Working level</span><div class="bar"><i style="width:70%"></i></div></div>
+      <div class="lang"><b>Deutsch</b><span>Working toward B1</span><div class="bar"><i style="width:15%"></i></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="head"><p class="label">Contact</p><h2>Let's talk</h2></div>
+    <div class="contact">
+      <dl>
+        <dt>Email</dt><dd>saif.mohamme.sm74@gmail.com</dd>
+        <dt>GitHub</dt><dd><a href="https://github.com/saifmohammedsm74-design">github.com/saifmohammedsm74-design</a></dd>
+        <dt>Location</dt><dd>Egypt</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>© 2026 Seif · built with HTML and CSS</footer>
+</main>
+</body>
+</html>
