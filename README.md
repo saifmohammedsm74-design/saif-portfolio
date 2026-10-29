@@ -1,8 +1,8 @@
-# Seif's Portfolio
+# Saif's Portfolio
 
 A one-page personal portfolio built with plain HTML and CSS. No framework, no build step.
 
-**Live site:** https://saifmohammedsm74-design.github.io/seif-portfolio/
+**Live site:** https://saifmohammedsm74-design.github.io/saif-portfolio/
 
 ## What's on the page
 
